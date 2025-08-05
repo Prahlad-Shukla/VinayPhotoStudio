@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,37 +86,27 @@
             animation: tagPulse 0.5s ease;
         }
 
-        /* Hero section */
+        /* Hero section - Modified to prevent overlap */
         .hero-section {
             position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            overflow: hidden;
-        }
-        .background-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translate(-50%, -50%);
-            background-size: cover;
-        }
-        .hero-overlay {
-            background-color: rgba(0, 0, 0, 0.2);
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1;
+            margin-top: 76px; /* Height of your navigation bar */
+            overflow: hidden;
+            background: black;
+        }
+        
+        .background-video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Navigation bar styling */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure nav stays on top */
         }
         
         /* Dark mode toggle switch */
@@ -192,21 +180,7 @@
             <source src="Vinay Photo State.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <!-- <div class="hero-overlay"></div>
-        <div class="container mx-auto px-4 z-10 animate-fadeIn">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">Your Complete Printing Solution</h1>
-            <p class="text-xl sm:text-2xl mb-8 text-white max-w-2xl mx-auto drop-shadow-md">Quality prints, fast service, and expert advice for all your document needs</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#services" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn">
-                    Our Services <i class="fas fa-arrow-down ml-2"></i>
-                </a>
-                <a href="#contact" class="bg-white hover:bg-gray-100 text-blue-600 font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn" style="animation-delay: 0.2s;">
-                    Contact Now <i class="fas fa-phone-alt ml-2"></i>
-                </a>
-            </div>
-        </div> -->
     </section>
-
     <!-- Services Section -->
     <section id="services" class="py-16 sm:py-20 px-4 sm:px-6 bg-white dark:bg-gray-800 rounded-t-lg shadow-inner transition-colors duration-300">
         <div class="container mx-auto">
@@ -338,22 +312,30 @@
                     <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white mb-2">J.K Mishra(Pandit Ji)</h3>
                     <p class="text-blue-600 dark:text-blue-400 text-base sm:text-lg mb-4">Co-Founder & Lead Operator</p>
                     <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">With over 30+ years of experience in the printing industry, pandit ji ensures every print is perfect. His dedication to quality and customer satisfaction is the cornerstone of our shop.</p>
-                    <div class="mt-4 flex justify-center space-x-3">
-                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                    <div class="mt-4 flex flex-col space-y-2">
+                        <a href="tel:+919876543210" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-phone-alt mr-2"></i>+91 9919397375
+                        </a>
+                        <!-- <a href="tel:+911234567890" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-phone-alt mr-2"></i> +91 12345 67890
+                        </a> -->
                     </div>
                 </div>
                 <!-- Owner 2 -->
                 <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg w-full md:w-1/2 lg:w-1/3 text-center animate-slideInRight max-w-sm hover:transform hover:scale-105 transition-transform duration-500" style="animation-delay: 0.3s;">
-                    <img src="My.jpg" alt="Rahul Gupta" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-green-500 shadow-md hover:animate-pulse-slow">
+                    <img src="My.jpg" alt="Deepak Mishra" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-green-500 shadow-md hover:animate-pulse-slow">
                     <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white mb-2">Deepak Mishra</h3>
                     <p class="text-green-600 dark:text-green-400 text-base sm:text-lg mb-4">Co-Founder & Business Manager</p>
                     <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">Deepak handles the business operations and customer relations, ensuring a smooth and friendly experience for everyone who walks through our doors. His vision drives our growth.</p>
-                    <div class="mt-4 flex justify-center space-x-3">
-                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-instagram"></i></a>
+                    <div class="mt-4 flex flex-col space-y-3">
+                        <a href="tel:+919876543210" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors duration-300 flex items-center justify-center gap-2">
+                            <i class="fas fa-phone rotate-90 transform"></i>
+                            <span>+91 7390000504</span>
+                        </a>
+                        <!-- <a href="tel:+911234567890" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors duration-300 flex items-center justify-center gap-2">
+                            <i class="fas fa-phone rotate-90 transform"></i>
+                            <span>+91 12345 67890</span>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -404,13 +386,13 @@
                     <i class="fas fa-envelope text-xl sm:text-2xl mr-2 sm:mr-3"></i> Mail Us
                 </a>
                 <!-- Instagram Button -->
-                <a href="https://www.instagram.com/vinayphotostate" target="_blank" class="contact-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 1s;">
+                <!-- <a href="https://www.instagram.com/vinayphotostate" target="_blank" class="contact-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 1s;">
                     <i class="fab fa-instagram text-xl sm:text-2xl mr-2 sm:mr-3"></i> Instagram
-                </a>
+                </a> -->
             </div>
 
             <!-- Contact Form -->
-            <div class="max-w-2xl mx-auto bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md p-6 sm:p-8 animate-fadeIn" style="animation-delay: 0.3s;">
+            <!-- <div class="max-w-2xl mx-auto bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md p-6 sm:p-8 animate-fadeIn" style="animation-delay: 0.3s;">
                 <h3 class="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-400 mb-6">Send Us a Message</h3>
                 <form class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                     <div class="sm:col-span-2">
@@ -435,12 +417,12 @@
                         </button>
                     </div>
                 </form>
-            </div>
+            </div> -->
 
-            <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-lg mt-8">
+            <!-- <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-lg mt-8">
                 <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> <strong>Address:</strong> In front of SP Office,Civil lines Sultanpur, Uttar Pradesh, India</p>
                 <p><i class="fas fa-clock mr-2"></i> <strong>Opening Hours:</strong> Daily: 9:00 AM - 9:00 PM </p>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -448,11 +430,24 @@
     <footer class="bg-gray-800 text-white py-6 sm:py-8 px-4 sm:px-6 rounded-t-lg">
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Vinay Photo State</h3>
-                    <p class="text-gray-400">Your trusted printing partner in Sultanpur for all document and photo needs.</p>
+                    <h3 class="text-xl font-bold mb-4"><i class="fas fa-map-marker-alt mr-2"></i> Address</h3>
+                    <!-- <p class="text-gray-400">Address: In front of SP Office,Civil lines Sultanpur, Uttar Pradesh, India</p> -->
+                    <p><i class="text-gray-400"></i> <strong>In front of SP Office,</strong>Civil lines Sultanpur, Uttar Pradesh, India </p>
                 </div>
+
                 <div>
+                    <!-- <p><i class="text-gray-400"></i> <strong>Opening Hours:</strong> Daily: 9:00 AM - 9:00 PM </p> -->
+                    <p class="text-gray-400"><strong>Opening Hours:</strong>Daily: 9:00 AM - 9:00 PM </p>
+                    <!-- <p class="text-gray-400">Your trusted printing partner in Sultanpur for all document and photo needs.</p> -->
+                </div>
+                <!-- <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-lg mt-8">
+                    <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> <strong>Address:</strong> In front of SP Office,Civil lines Sultanpur, Uttar Pradesh, India</p>
+                    <p><i class="text-gray-400"></i> <strong>Opening Hours:</strong> Daily: 9:00 AM - 9:00 PM </p>
+                </div> -->
+                <!-- <div>
                     <h4 class="font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
@@ -460,8 +455,8 @@
                         <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
                     </ul>
-                </div>
-                <div>
+                </div> -->
+                <!-- <div>
                     <h4 class="font-bold mb-4">Services</h4>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Photocopying</a></li>
@@ -469,8 +464,8 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">ID Cards</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Document Services</a></li>
                     </ul>
-                </div>
-                <div>
+                </div> -->
+                <!-- <div>
                     <h4 class="font-bold mb-4">Connect With Us</h4>
                     <div class="flex space-x-4 mb-4">
                         <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
@@ -485,7 +480,7 @@
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
                 <p>&copy; 2025 Vinay Photo State. All rights reserved.</p>
