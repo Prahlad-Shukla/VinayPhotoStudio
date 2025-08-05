@@ -6,6 +6,26 @@
     <title>Vinay Photo State</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts - Inter -->
@@ -13,9 +33,9 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
-        /* Custom scroll-behavior for smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
@@ -38,11 +58,15 @@
             70% { transform: scale(0.9); }
             100% { transform: scale(1); }
         }
-        /* New animation for a subtle "flash" effect on hover, mimicking a xerox scan */
         @keyframes flashEffect {
-            0% { box-shadow: 0 0 0px rgba(59, 130, 246, 0); } /* Start with no shadow */
-            50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.7); } /* Peak glow/flash */
-            100% { box-shadow: 0 0 0px rgba(59, 130, 246, 0); } /* End with no shadow */
+            0% { box-shadow: 0 0 0px rgba(59, 130, 246, 0); }
+            50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.7); }
+            100% { box-shadow: 0 0 0px rgba(59, 130, 246, 0); }
+        }
+        @keyframes tagPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .animate-fadeIn {
@@ -58,21 +82,22 @@
             animation: bounceIn 0.8s ease-out forwards;
         }
         .hover-flash:hover {
-            animation: flashEffect 0.5s ease-out; /* Apply flash effect on hover */
+            animation: flashEffect 0.5s ease-out;
+        }
+        .service-tag:hover {
+            animation: tagPulse 0.5s ease;
         }
 
-        /* Hero section specific styles for background video */
+        /* Hero section */
         .hero-section {
             position: relative;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
             display: flex;
-            align-items: center; /* Vertically centers content */
-            justify-content: center; /* Horizontally centers content */
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
             overflow: hidden;
-            /* Padding-top is crucial to prevent content from being hidden behind the fixed navigation bar */
-            /* Removed padding-top here as there's no content to push down */
         }
         .background-video {
             position: absolute;
@@ -82,146 +107,300 @@
             min-height: 100%;
             width: auto;
             height: auto;
-            z-index: -2; /* Below overlay and content */
+            z-index: -2;
             transform: translate(-50%, -50%);
             background-size: cover;
         }
         .hero-overlay {
-            /* Keep a very subtle overlay or remove it completely if you want the video to be fully visible */
-            background-color: rgba(0, 0, 0, 0.2); /* Very subtle dark overlay */
+            background-color: rgba(0, 0, 0, 0.2);
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Above video, below content */
+            z-index: -1;
+        }
+        
+        /* Dark mode toggle switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #68D391;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-md py-4 px-6 fixed w-full z-50 top-0 rounded-b-lg">
+    <nav class="bg-white dark:bg-gray-800 shadow-md py-4 px-6 fixed w-full z-50 top-0 rounded-b-lg transition-colors duration-300">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-blue-700 hover:text-blue-900 transition duration-300">Vinay Photo State</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="text-gray-600 hover:text-blue-700 transition duration-300 font-medium">Home</a>
-                <a href="#services" class="text-gray-600 hover:text-blue-700 transition duration-300 font-medium">Services</a>
-                <a href="#about" class="text-gray-600 hover:text-blue-700 transition duration-300 font-medium">About Us</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-700 transition duration-300 font-medium">Contact</a>
+            <a href="#" class="text-2xl font-bold text-blue-700 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 transition duration-300 flex items-center">
+                <i class="fas fa-camera-retro mr-2"></i> Vinay Photo State
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300 font-medium">Home</a>
+                <a href="#services" class="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300 font-medium">Services</a>
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300 font-medium">About Us</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300 font-medium">Contact</a>
+                
+                <!-- Dark Mode Toggle -->
+                <div class="flex items-center ml-4">
+                    <span class="mr-2 text-sm text-gray-600 dark:text-gray-300">
+                        <i class="fas fa-sun"></i>
+                    </span>
+                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                        <input type="checkbox" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                        <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                    </div>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">
+                        <i class="fas fa-moon"></i>
+                    </span>
+                </div>
             </div>
+            
             <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-blue-700 focus:outline-none">
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 focus:outline-none">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white py-2 mt-2 rounded-lg shadow-lg">
-            <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Home</a>
-            <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Services</a>
-            <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">About Us</a>
-            <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Contact</a>
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-700 py-2 mt-2 rounded-lg shadow-lg transition-colors duration-300">
+            <a href="#home" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md">Home</a>
+            <a href="#services" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md">Services</a>
+            <a href="#about" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md">About Us</a>
+            <a href="#contact" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md">Contact</a>
+            <div class="flex items-center justify-center px-4 py-2">
+                <span class="mr-2 text-gray-700 dark:text-gray-200">
+                    <i class="fas fa-sun"></i>
+                </span>
+                <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                    <input type="checkbox" id="mobile-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                    <label for="mobile-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                </div>
+                <span class="text-gray-700 dark:text-gray-200">
+                    <i class="fas fa-moon"></i>
+                </span>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section with Background Video Only -->
+    <!-- Hero Section with Background Video -->
     <section id="home" class="hero-section">
-        <!-- Background Video -->
         <video autoplay loop muted playsinline class="background-video">
-            <!-- Replace 'Vinay Photo State.mp4' with the actual path to your video file -->
             <source src="Vinay Photo State.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="hero-overlay"></div>
-        <!-- All content (h1, p, carousel) has been removed from here -->
+        <!-- <div class="hero-overlay"></div>
+        <div class="container mx-auto px-4 z-10 animate-fadeIn">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">Your Complete Printing Solution</h1>
+            <p class="text-xl sm:text-2xl mb-8 text-white max-w-2xl mx-auto drop-shadow-md">Quality prints, fast service, and expert advice for all your document needs</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#services" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn">
+                    Our Services <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="#contact" class="bg-white hover:bg-gray-100 text-blue-600 font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn" style="animation-delay: 0.2s;">
+                    Contact Now <i class="fas fa-phone-alt ml-2"></i>
+                </a>
+            </div>
+        </div> -->
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16 sm:py-20 px-4 sm:px-6 bg-white rounded-t-lg shadow-inner">
+    <section id="services" class="py-16 sm:py-20 px-4 sm:px-6 bg-white dark:bg-gray-800 rounded-t-lg shadow-inner transition-colors duration-300">
         <div class="container mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-8 sm:mb-12 animate-fadeIn">Our Services</h2>
-            <!-- Adjusted grid for better mobile stacking and centering -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
-                <!-- Service Item 1 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-slideInLeft w-full max-w-sm">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-copy"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">Photocopying</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">High-speed, high-quality black & white and color photocopying for all document sizes.</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-blue-700 dark:text-blue-400 mb-8 sm:mb-12 animate-fadeIn">
+                <span class="inline-block hover:animate-float">Our Services</span>
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row gap-8 sm:gap-12">
+                <!-- Left Column - Services List -->
+                <div class="lg:w-1/2 animate-slideInLeft">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Service Tags with Icons -->
+                        <div class="service-tag bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-bolt text-blue-600 dark:text-blue-400 mr-2"></i> Fast Photo Copy
+                        </div>
+                        <div class="service-tag bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-clock text-green-600 dark:text-green-400 mr-2"></i> Urgent Photo
+                        </div>
+                        <div class="service-tag bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-flask text-purple-600 dark:text-purple-400 mr-2"></i> Lab Prints
+                        </div>
+                        <div class="service-tag bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-book text-yellow-600 dark:text-yellow-400 mr-2"></i> Spiral & Hard Binding
+                        </div>
+                        <div class="service-tag bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-project-diagram text-red-600 dark:text-red-400 mr-2"></i> Project Work
+                        </div>
+                        <div class="service-tag bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-file-alt text-indigo-600 dark:text-indigo-400 mr-2"></i> Online Forms
+                        </div>
+                        <div class="service-tag bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-signature text-pink-600 dark:text-pink-400 mr-2"></i> Digital Signature
+                        </div>
+                        <div class="service-tag bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-globe text-teal-600 dark:text-teal-400 mr-2"></i> Website Services
+                        </div>
+                        <div class="service-tag bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-id-card text-orange-600 dark:text-orange-400 mr-2"></i> Aadhaar Card
+                        </div>
+                        <div class="service-tag bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-credit-card text-blue-600 dark:text-blue-400 mr-2"></i> PVC Card
+                        </div>
+                        <div class="service-tag bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-file-invoice text-green-600 dark:text-green-400 mr-2"></i> PAN Card
+                        </div>
+                        <div class="service-tag bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-vote-yea text-purple-600 dark:text-purple-400 mr-2"></i> Voter ID
+                        </div>
+                        <div class="service-tag bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-keyboard text-yellow-600 dark:text-yellow-400 mr-2"></i> Hindi/English Typing
+                        </div>
+                        <div class="service-tag bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-mobile-alt text-red-600 dark:text-red-400 mr-2"></i> Mobile to Print
+                        </div>
+                        <div class="service-tag bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-car text-indigo-600 dark:text-indigo-400 mr-2"></i> Vehicle Insurance
+                        </div>
+                        <div class="service-tag bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-file-pdf text-pink-600 dark:text-pink-400 mr-2"></i> PDF Print
+                        </div>
+                        <div class="service-tag bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-file-alt text-teal-600 dark:text-teal-400 mr-2"></i> A4, A3, Photo Paper
+                        </div>
+                        <div class="service-tag bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-boxes text-orange-600 dark:text-orange-400 mr-2"></i> Wholesale Printing
+                        </div>
+                        <div class="service-tag bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-id-card-alt text-blue-600 dark:text-blue-400 mr-2"></i> Visiting Cards
+                        </div>
+                        <div class="service-tag bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer">
+                            <i class="fas fa-receipt text-green-600 dark:text-green-400 mr-2"></i> Bills & Invoices
+                        </div>
+                    </div>
                 </div>
-                <!-- Service Item 2 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-fadeIn w-full max-w-sm" style="animation-delay: 0.2s;">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-print"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">Printing</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">Professional printing services for documents, resumes, photos, and custom designs.</p>
-                </div>
-                <!-- Service Item 3 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-slideInRight w-full max-w-sm" style="animation-delay: 0.4s;">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-file-invoice"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">Lamination & Binding</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">Durable lamination and various binding options (spiral, comb) for your reports and projects.</p>
-                </div>
-                <!-- Service Item 4 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-slideInLeft w-full max-w-sm" style="animation-delay: 0.6s;">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-qrcode"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">QR Code Generation</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">Generate QR codes for business cards, websites, and promotional materials.</p>
-                </div>
-                <!-- Service Item 5 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-fadeIn w-full max-w-sm" style="animation-delay: 0.8s;">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-id-card"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">ID Card Printing</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">Custom ID card printing for businesses, schools, and organizations.</p>
-                </div>
-                <!-- Service Item 6 -->
-                <div class="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-2 hover-flash animate-slideInRight w-full max-w-sm" style="animation-delay: 1s;">
-                    <div class="text-4xl sm:text-5xl text-blue-500 mb-4 text-center"><i class="fas fa-image"></i></div>
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 text-center">Photo Printing</h3>
-                    <p class="text-gray-700 text-center text-sm sm:text-base">High-quality photo printing in various sizes and finishes.</p>
+                
+                <!-- Right Column - Video -->
+                <div class="lg:w-1/2 animate-slideInRight">
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden aspect-video">
+                        <!-- Placeholder for your video -->
+                        <!-- <div class="w-full h-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                            
+                            <div class="text-center p-6">
+                                <i class="fas fa-video text-5xl mb-4"></i>
+                                
+                                <h3 class="text-xl font-bold mb-2">Our Printing Process</h3>
+                                <p class="text-sm">Video showcasing our high-quality printing services</p>
+                            </div>
+                        </div> -->
+                        <!-- Replace with your actual video -->
+                        <video class="w-full h-auto" controls>
+                            <source src="ShopVideo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <!-- Service Highlights -->
+                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500 shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <h4 class="font-bold text-blue-700 dark:text-blue-300 mb-1">Fast Turnaround</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Urgent jobs completed within hours</p>
+                        </div>
+                        <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-l-4 border-green-500 shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <h4 class="font-bold text-green-700 dark:text-green-300 mb-1">Bulk Discounts</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Special rates for wholesale orders</p>
+                        </div>
+                        <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <h4 class="font-bold text-purple-700 dark:text-purple-300 mb-1">Quality Guarantee</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Premium materials & printing</p>
+                        </div>
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border-l-4 border-yellow-500 shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <h4 class="font-bold text-yellow-700 dark:text-yellow-300 mb-1">Expert Advice</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Professional guidance for all projects</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Us Section -->
-    <section id="about" class="py-16 sm:py-20 px-4 sm:px-6 bg-gray-100 rounded-t-lg shadow-inner">
+    <section id="about" class="py-16 sm:py-20 px-4 sm:px-6 bg-gray-100 dark:bg-gray-900 rounded-t-lg shadow-inner transition-colors duration-300">
         <div class="container mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-8 sm:mb-12 animate-fadeIn">About Us</h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-blue-700 dark:text-blue-400 mb-8 sm:mb-12 animate-fadeIn">
+                <span class="inline-block hover:animate-float">About Us</span>
+            </h2>
             <div class="flex flex-col md:flex-row items-center justify-center gap-8 sm:gap-12">
                 <!-- Owner 1 -->
-                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full md:w-1/2 lg:w-1/3 text-center animate-slideInLeft max-w-sm">
-                    <img src="https://placehold.co/150x150/A0B2C3/FFFFFF?text=Owner+1" alt="Owner 1" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-blue-500 shadow-md">
-                    <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">Vinay Sharma</h3>
-                    <p class="text-blue-600 text-base sm:text-lg mb-4">Co-Founder & Lead Operator</p>
-                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">With over 10 years of experience in the printing industry, Vinay ensures every print is perfect. His dedication to quality and customer satisfaction is the cornerstone of our shop.</p>
+                <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg w-full md:w-1/2 lg:w-1/3 text-center animate-slideInLeft max-w-sm hover:transform hover:scale-105 transition-transform duration-500">
+                    <img src="Daddy.jpg" alt="Vinay Sharma" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-blue-500 shadow-md hover:animate-pulse-slow">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white mb-2">J.K Mishra(Pandit Ji)</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-base sm:text-lg mb-4">Co-Founder & Lead Operator</p>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">With over 30+ years of experience in the printing industry, pandit ji ensures every print is perfect. His dedication to quality and customer satisfaction is the cornerstone of our shop.</p>
+                    <div class="mt-4 flex justify-center space-x-3">
+                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <!-- Owner 2 -->
-                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full md:w-1/2 lg:w-1/3 text-center animate-slideInRight max-w-sm" style="animation-delay: 0.3s;">
-                    <img src="https://placehold.co/150x150/C3A0B2/FFFFFF?text=Owner+2" alt="Owner 2" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-blue-500 shadow-md">
-                    <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2">Rahul Gupta</h3>
-                    <p class="text-blue-600 text-base sm:text-lg mb-4">Co-Founder & Business Manager</p>
-                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">Rahul handles the business operations and customer relations, ensuring a smooth and friendly experience for everyone who walks through our doors. His vision drives our growth.</p>
+                <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg w-full md:w-1/2 lg:w-1/3 text-center animate-slideInRight max-w-sm hover:transform hover:scale-105 transition-transform duration-500" style="animation-delay: 0.3s;">
+                    <img src="My.jpg" alt="Rahul Gupta" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full mx-auto mb-4 sm:mb-6 object-cover border-4 border-green-500 shadow-md hover:animate-pulse-slow">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white mb-2">Deepak Mishra</h3>
+                    <p class="text-green-600 dark:text-green-400 text-base sm:text-lg mb-4">Co-Founder & Business Manager</p>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">Deepak handles the business operations and customer relations, ensuring a smooth and friendly experience for everyone who walks through our doors. His vision drives our growth.</p>
+                    <div class="mt-4 flex justify-center space-x-3">
+                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-green-500 hover:text-green-700 dark:hover:text-green-400"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Info -->
+            <div class="mt-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 max-w-4xl mx-auto animate-fadeIn" style="animation-delay: 0.5s;">
+                <h3 class="text-2xl font-bold text-center text-blue-700 dark:text-blue-400 mb-6">Why Choose Vinay Photo State?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-4 hover:transform hover:scale-105 transition-transform duration-300">
+                        <div class="text-4xl text-blue-500 dark:text-blue-400 mb-4"><i class="fas fa-award"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Quality Assurance</h4>
+                        <p class="text-gray-600 dark:text-gray-300">We use only the best materials and equipment for flawless results every time.</p>
+                    </div>
+                    <div class="text-center p-4 hover:transform hover:scale-105 transition-transform duration-300">
+                        <div class="text-4xl text-blue-500 dark:text-blue-400 mb-4"><i class="fas fa-clock"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Quick Service</h4>
+                        <p class="text-gray-600 dark:text-gray-300">Need it fast? We offer express services for urgent printing needs.</p>
+                    </div>
+                    <div class="text-center p-4 hover:transform hover:scale-105 transition-transform duration-300">
+                        <div class="text-4xl text-blue-500 dark:text-blue-400 mb-4"><i class="fas fa-rupee-sign"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Competitive Pricing</h4>
+                        <p class="text-gray-600 dark:text-gray-300">High-quality printing at prices that won't break your budget.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6 bg-white rounded-t-lg shadow-inner">
+    <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6 bg-white dark:bg-gray-800 rounded-t-lg shadow-inner transition-colors duration-300">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold text-blue-700 mb-8 sm:mb-12 animate-fadeIn">Get in Touch</h2>
-            <p class="text-base sm:text-xl text-gray-700 mb-8 sm:mb-10 animate-fadeIn" style="animation-delay: 0.2s;">We'd love to hear from you! Reach out to us through any of the following channels.</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-blue-700 dark:text-blue-400 mb-8 sm:mb-12 animate-fadeIn">
+                <span class="inline-block hover:animate-float">Get in Touch</span>
+            </h2>
+            <p class="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-8 sm:mb-10 animate-fadeIn" style="animation-delay: 0.2s;">We'd love to hear from you! Reach out to us through any of the following channels.</p>
 
             <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
                 <!-- WhatsApp Button -->
-                <a href="https://wa.me/919876543210" target="_blank" class="contact-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.4s;">
+                <a href="https://wa.me/7390000504" target="_blank" class="contact-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.4s;">
                     <i class="fab fa-whatsapp text-xl sm:text-2xl mr-2 sm:mr-3"></i> WhatsApp Us
                 </a>
                 <!-- Call Button -->
-                <a href="tel:+919876543210" class="contact-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.6s;">
+                <a href="tel:+917390000504" class="contact-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.6s;">
                     <i class="fas fa-phone-alt text-xl sm:text-2xl mr-2 sm:mr-3"></i> Call Us
                 </a>
                 <!-- Email Button -->
-                <a href="mailto:info@vinayphotostate.com" class="contact-button bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.8s;">
+                <a href="mailto:vpcsln12@gmail.com" class="contact-button bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-bounceIn text-sm sm:text-base" style="animation-delay: 0.8s;">
                     <i class="fas fa-envelope text-xl sm:text-2xl mr-2 sm:mr-3"></i> Mail Us
                 </a>
                 <!-- Instagram Button -->
@@ -230,26 +409,157 @@
                 </a>
             </div>
 
-            <div class="text-gray-600 text-sm sm:text-lg">
-                <p class="mb-2"><strong>Address:</strong> In front of SP Office,Civil Lines, Sultanpur, Uttar Pradesh, India</p>
-                <p><strong>Opening Hours:</strong> Monday - Sunday: 9:00 AM - 9:00 PM</p>
+            <!-- Contact Form -->
+            <div class="max-w-2xl mx-auto bg-gray-50 dark:bg-gray-700 rounded-xl shadow-md p-6 sm:p-8 animate-fadeIn" style="animation-delay: 0.3s;">
+                <h3 class="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-400 mb-6">Send Us a Message</h3>
+                <form class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+                    <div class="sm:col-span-2">
+                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white transition duration-300">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white transition duration-300">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+                        <input type="tel" id="phone" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white transition duration-300">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white transition duration-300"></textarea>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-gray-600 dark:text-gray-300 text-sm sm:text-lg mt-8">
+                <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> <strong>Address:</strong> In front of SP Office,Civil lines Sultanpur, Uttar Pradesh, India</p>
+                <p><i class="fas fa-clock mr-2"></i> <strong>Opening Hours:</strong> Daily: 9:00 AM - 9:00 PM </p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6 sm:py-8 px-4 sm:px-6 rounded-t-lg">
-        <div class="container mx-auto text-center text-sm sm:text-base">
-            <p>&copy; 2025 Vinay Photo State. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 sm:space-x-6 mt-4">
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Vinay Photo State</h3>
+                    <p class="text-gray-400">Your trusted printing partner in Sultanpur for all document and photo needs.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Photocopying</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Printing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">ID Cards</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Document Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <p class="text-gray-400">Subscribe to our newsletter</p>
+                    <div class="mt-2 flex">
+                        <input type="email" placeholder="Your email" class="px-3 py-2 rounded-l-lg bg-gray-700 text-white w-full focus:outline-none">
+                        <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Vinay Photo State. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-blue-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Dark mode toggle
+        const toggle = document.getElementById('toggle');
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const html = document.documentElement;
+
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                html.classList.remove('dark');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for saved user preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            toggle.checked = true;
+            mobileToggle.checked = true;
+            toggleDarkMode(true);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Check system preference
+            toggle.checked = true;
+            mobileToggle.checked = true;
+            toggleDarkMode(true);
+        }
+
+        // Toggle dark mode
+        toggle.addEventListener('change', () => {
+            toggleDarkMode(toggle.checked);
+            mobileToggle.checked = toggle.checked;
+        });
+
+        mobileToggle.addEventListener('change', () => {
+            toggleDarkMode(mobileToggle.checked);
+            toggle.checked = mobileToggle.checked;
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -258,77 +568,26 @@
                     behavior: 'smooth'
                 });
                 // Close mobile menu if open
-                const mobileMenu = document.getElementById('mobile-menu');
                 if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                 }
             });
         });
 
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Services Carousel Logic (no longer needed in hero, but keeping for reference if user wants it elsewhere)
-        // This section is now effectively unused as the carousel is removed from the hero.
-        // If you plan to re-introduce a carousel in another section, you can use this logic.
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-item');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Auto-advance carousel every 5 seconds (commented out as carousel is removed from hero)
-        // setInterval(nextSlide, 5000);
-
-        // Initial slide display (commented out as carousel is removed from hero)
-        // showSlide(currentSlide);
-
-        // Intersection Observer for animations on scroll
+        // Intersection Observer for animations
         const animateElements = document.querySelectorAll('.animate-fadeIn, .animate-slideInLeft, .animate-slideInRight, .animate-bounceIn');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1'; // Ensure opacity is set for animation to work
+                    entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0) translateX(0) scale(1)';
-                    // Add specific animation class if it's not already there
-                    if (entry.target.classList.contains('animate-fadeIn')) {
-                        entry.target.classList.add('animate-fadeIn');
-                    } else if (entry.target.classList.contains('animate-slideInLeft')) {
-                        entry.target.classList.add('animate-slideInLeft');
-                    } else if (entry.target.classList.contains('animate-slideInRight')) {
-                        entry.target.classList.add('animate-slideInRight');
-                    } else if (entry.target.classList.contains('animate-bounceIn')) {
-                        entry.target.classList.add('animate-bounceIn');
-                    }
-                    observer.unobserve(entry.target); // Stop observing once animated
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+        }, { threshold: 0.1 });
 
         animateElements.forEach(element => {
-            // Set initial state for elements to be animated
             if (element.classList.contains('animate-fadeIn')) {
                 element.style.opacity = '0';
                 element.style.transform = 'translateY(20px)';
@@ -343,6 +602,16 @@
                 element.style.transform = 'scale(0.3)';
             }
             observer.observe(element);
+        });
+
+        // Service tag hover effect
+        document.querySelectorAll('.service-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', () => {
+                tag.style.transform = 'scale(1.05)';
+            });
+            tag.addEventListener('mouseleave', () => {
+                tag.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
